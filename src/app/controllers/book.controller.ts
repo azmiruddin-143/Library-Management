@@ -36,4 +36,29 @@ bookRouters.get ('/books', async (req, res) => {
 
 
 
+bookRouters.put('/books/:bookId', async (req, res) => {
+    const bookId = req.params.bookId
+    const bookBody = req.body
+    const book = await schemaBook.findByIdAndUpdate(bookId,bookBody,{new: true})
+    res.status(201).json({
+        succese: true,
+        message: "Book er copies Update kora oice",
+        book: book
+    })
+})
+
+
+bookRouters.delete('/books/:bookId', async (req, res) => {
+    const bookId = req.params.bookId
+    const book = await schemaBook.findByIdAndDelete(bookId)
+    res.status(201).json({
+        succese: true,
+        message: "Book er one data Delete kora oice",
+        book: book
+    })
+})
+
+
+
+
 
