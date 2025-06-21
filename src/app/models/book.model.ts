@@ -7,7 +7,7 @@ const bookSchema = new Schema({
     author: String,
     genre: {
         type: String,
-        enum: ['FICTION', 'NON_FICTION','SCIENCE', 'HISTORY', 'BIOGRAPHY', 'FANTASY']
+        enum: ['AICTION', 'NON_FICTION','SCIENCE', 'HISTORY', 'BIOGRAPHY', 'FANTASY']
     },
     isbn: {
         type: String,
