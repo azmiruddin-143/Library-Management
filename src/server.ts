@@ -1,10 +1,12 @@
+
+// server.ts//
 require('dotenv').config()
 import { Server } from "http";
-import app from "./app";
 import mongose from 'mongoose'
-
+import app from "./app";
 let server: Server;
 const PORT = 5000
+
 async function main() {
     try {
 
