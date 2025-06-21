@@ -1,22 +1,22 @@
 require('dotenv').config()
 import { Server } from "http";
 import app from "./app";
-import mongose from'mongoose'
+import mongose from 'mongoose'
 
 let server: Server;
- const PORT = 5000
-  async function main () {
-    try{
+const PORT = 5000
+async function main() {
+    try {
 
-          await mongose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.wc7vd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`);
+        await mongose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.wc7vd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`);
 
-        server = app.listen(PORT,() =>{
-         console.log(`App is Lister Port ${PORT}`);
+        server = app.listen(PORT, () => {
+            console.log(`App is Lister Port ${PORT}`);
         })
-    
-    }catch(error) {
+
+    } catch (error) {
         console.log(error);
     }
- }
+}
 
- main()
+main()
