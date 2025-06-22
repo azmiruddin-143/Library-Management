@@ -35,7 +35,8 @@ bookRouters.get('/books', async (req, res) => {
     const book = await schemaBook
 
         .find(genre ? { genre: genre } : {})
-        .sort(sortBy ? { [sortBy]: sort === 'asc' ? 1 : -1 } : {})
+        // .sort(sortBy ? { [sortBy]: sort === 'asc' ? 1 : -1 } : {})
+         .sort(sortBy ? { [sortBy as string]: sort === 'desc' ? -1 : 1 } : {})
         .limit(limit ? +limit : 5);
 
     res.status(201).json({
