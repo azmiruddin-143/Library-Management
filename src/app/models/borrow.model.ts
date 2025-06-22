@@ -11,6 +11,7 @@ const borrowSchema = new Schema<IBorrow>({
     quantity: {
         type: Number,
         required: true,
+          min: [1, 'Quantity must be a positive number']
     },
     dueDate: {
         type: Schema.Types.Date,
@@ -23,5 +24,12 @@ const borrowSchema = new Schema<IBorrow>({
     }
 
 );
+
+borrowSchema.pre('save', function(next) {
+  if (this.dueDate < new Date()) {
+    return next(new Error('Due date must be in the future'));
+  }
+  next();
+});
 
 export const schemaborrow = model('schemaborrow', borrowSchema)

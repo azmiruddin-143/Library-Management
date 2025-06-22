@@ -4,25 +4,38 @@ import { schemaBook } from "../models/book.model";
 export const bookRouters = express.Router()
 
 bookRouters.post('/', async (req, res) => {
-    const bookBody = req.body
-    const book = await schemaBook.create(bookBody)
-    res.status(201).json({
-        succese: true,
-        message: "Book created successfully",
-        book: book
-    })
+    try {
+        const bookBody = req.body
+        const book = await schemaBook.create(bookBody)
+        res.status(201).json({
+            succese: true,
+            message: "Book created successfully",
+            book: book
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error,
+        });
+    }
 })
 
 bookRouters.get('/:id', async (req, res) => {
-    const id = req.params.id
-    const book = await schemaBook.findById(id)
-    res.status(201).json({
-        succese: true,
-        message: "Book retrieved successfully",
-        book: book
-    })
+    try {
+        const id = req.params.id
+        const book = await schemaBook.findById(id)
+        res.status(201).json({
+            succese: true,
+            message: "Book retrieved successfully",
+            book: book
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: 'Invalid ID format',
+        });
+    }
 })
-
 
 
 // filter//
@@ -35,7 +48,7 @@ bookRouters.get('/', async (req, res) => {
     const book = await schemaBook
 
         .find(genre ? { genre: genre } : {})
-         .sort(sortBy ? { [sortBy as string]: sort === 'desc' ? -1 : 1 } : {})
+        .sort(sortBy ? { [sortBy as string]: sort === 'desc' ? -1 : 1 } : {})
         .limit(limit ? +limit : 5);
 
     res.status(201).json({
@@ -50,25 +63,41 @@ bookRouters.get('/', async (req, res) => {
 // filter//
 
 bookRouters.put('/:bookId', async (req, res) => {
-    const bookId = req.params.bookId
-    const bookBody = req.body
-    const book = await schemaBook.findByIdAndUpdate(bookId, bookBody, { new: true })
-    res.status(201).json({
-        succese: true,
-        message: "Book updated successfully",
-        book: book
-    })
+    try {
+        const bookId = req.params.bookId
+        const bookBody = req.body
+        const book = await schemaBook.findByIdAndUpdate(bookId, bookBody, { new: true })
+        res.status(201).json({
+            succese: true,
+            message: "Book updated successfully",
+            book: book
+        })
+    }
+    catch (error) {
+        res.status(400).json({
+            success: false,
+            message: 'Invalid ID format',
+        });
+    }
 })
 
 
 bookRouters.delete('/:bookId', async (req, res) => {
-    const bookId = req.params.bookId
-    const book = await schemaBook.findByIdAndDelete(bookId)
-    res.status(201).json({
-        succese: true,
-        message: "Book deleted successfully",
-        data: null
-    })
+    try {
+        const bookId = req.params.bookId
+        const book = await schemaBook.findByIdAndDelete(bookId)
+        res.status(201).json({
+            succese: true,
+            message: "Book deleted successfully",
+            data: null
+        })
+    }
+    catch (error) {
+        res.status(400).json({
+            success: false,
+            message: 'Invalid ID format',
+        });
+    }
 })
 
 

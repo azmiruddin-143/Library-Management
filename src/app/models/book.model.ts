@@ -28,6 +28,10 @@ const bookSchema = new Schema<IBook>({
 
 );
 
+bookSchema.pre('save', function(next) {
+  if (this.title) this.title = this.title.trim();
+  next();
+});
 
 bookSchema.methods.updateAfterBorrow = async function (quantity: number): Promise<void> {
     this.copies -= quantity;
