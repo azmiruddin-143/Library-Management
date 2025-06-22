@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.schemaBook = void 0;
-// book.model.ts//
+// book.model.ts////
 const mongoose_1 = require("mongoose");
 const bookSchema = new mongoose_1.Schema({
     title: String,
@@ -31,6 +31,11 @@ const bookSchema = new mongoose_1.Schema({
 }, {
     versionKey: false,
     timestamps: true
+});
+bookSchema.pre('save', function (next) {
+    if (this.title)
+        this.title = this.title.trim();
+    next();
 });
 bookSchema.methods.updateAfterBorrow = function (quantity) {
     return __awaiter(this, void 0, void 0, function* () {

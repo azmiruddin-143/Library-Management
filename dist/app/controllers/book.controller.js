@@ -18,22 +18,38 @@ const express_1 = __importDefault(require("express"));
 const book_model_1 = require("../models/book.model");
 exports.bookRouters = express_1.default.Router();
 exports.bookRouters.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const bookBody = req.body;
-    const book = yield book_model_1.schemaBook.create(bookBody);
-    res.status(201).json({
-        succese: true,
-        message: "Book created successfully",
-        book: book
-    });
+    try {
+        const bookBody = req.body;
+        const book = yield book_model_1.schemaBook.create(bookBody);
+        res.status(201).json({
+            succese: true,
+            message: "Book created successfully",
+            book: book
+        });
+    }
+    catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error,
+        });
+    }
 }));
 exports.bookRouters.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
-    const book = yield book_model_1.schemaBook.findById(id);
-    res.status(201).json({
-        succese: true,
-        message: "Book retrieved successfully",
-        book: book
-    });
+    try {
+        const id = req.params.id;
+        const book = yield book_model_1.schemaBook.findById(id);
+        res.status(201).json({
+            succese: true,
+            message: "Book retrieved successfully",
+            book: book
+        });
+    }
+    catch (error) {
+        res.status(400).json({
+            success: false,
+            message: 'Invalid ID format',
+        });
+    }
 }));
 // filter//
 exports.bookRouters.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -53,21 +69,37 @@ exports.bookRouters.get('/', (req, res) => __awaiter(void 0, void 0, void 0, fun
 }));
 // filter//
 exports.bookRouters.put('/:bookId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const bookId = req.params.bookId;
-    const bookBody = req.body;
-    const book = yield book_model_1.schemaBook.findByIdAndUpdate(bookId, bookBody, { new: true });
-    res.status(201).json({
-        succese: true,
-        message: "Book updated successfully",
-        book: book
-    });
+    try {
+        const bookId = req.params.bookId;
+        const bookBody = req.body;
+        const book = yield book_model_1.schemaBook.findByIdAndUpdate(bookId, bookBody, { new: true });
+        res.status(201).json({
+            succese: true,
+            message: "Book updated successfully",
+            book: book
+        });
+    }
+    catch (error) {
+        res.status(400).json({
+            success: false,
+            message: 'Invalid ID format',
+        });
+    }
 }));
 exports.bookRouters.delete('/:bookId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const bookId = req.params.bookId;
-    const book = yield book_model_1.schemaBook.findByIdAndDelete(bookId);
-    res.status(201).json({
-        succese: true,
-        message: "Book deleted successfully",
-        data: null
-    });
+    try {
+        const bookId = req.params.bookId;
+        const book = yield book_model_1.schemaBook.findByIdAndDelete(bookId);
+        res.status(201).json({
+            succese: true,
+            message: "Book deleted successfully",
+            data: null
+        });
+    }
+    catch (error) {
+        res.status(400).json({
+            success: false,
+            message: 'Invalid ID format',
+        });
+    }
 }));

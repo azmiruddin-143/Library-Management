@@ -12,6 +12,7 @@ const borrowSchema = new mongoose_1.Schema({
     quantity: {
         type: Number,
         required: true,
+        min: [1, 'Quantity must be a positive number']
     },
     dueDate: {
         type: mongoose_1.Schema.Types.Date,
@@ -20,5 +21,11 @@ const borrowSchema = new mongoose_1.Schema({
 }, {
     versionKey: false,
     timestamps: true
+});
+borrowSchema.pre('save', function (next) {
+    if (this.dueDate < new Date()) {
+        return next(new Error('Due date must be in the future'));
+    }
+    next();
 });
 exports.schemaborrow = (0, mongoose_1.model)('schemaborrow', borrowSchema);

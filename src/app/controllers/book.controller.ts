@@ -49,7 +49,7 @@ bookRouters.get('/', async (req, res) => {
 
         .find(genre ? { genre: genre } : {})
         .sort(sortBy ? { [sortBy as string]: sort === 'desc' ? -1 : 1 } : {})
-        .limit(limit ? +limit : 5);
+        .limit(limit ? +limit : 20);
 
     res.status(201).json({
         succese: true,
