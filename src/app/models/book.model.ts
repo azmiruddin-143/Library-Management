@@ -1,5 +1,5 @@
 
-// book.model.ts//
+// book.model.ts////
 import { model, Schema } from "mongoose";
 import { BookModel, IBook } from "../interface/book.interface";
 
