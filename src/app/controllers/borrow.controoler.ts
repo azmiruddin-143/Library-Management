@@ -9,7 +9,6 @@ borrowRouters.post('/', async (req, res) => {
     try {
         const { book, quantity, dueDate } = req.body;
 
-        // ✅ Static method call
         const updatedBook = await schemaBook.borrowBook(book, quantity);
 
         const newBorrow = await schemaborrow.create({ book, quantity, dueDate });
@@ -32,27 +31,24 @@ borrowRouters.get('/', async (req, res) => {
   try {
     const summary = await schemaborrow.aggregate([
       {
-        // Group by book ID and count total quantity
         $group: {
           _id: '$book',
           totalQuantity: { $sum: '$quantity' }
         }
       },
       {
-        // Join with book collection
+     
         $lookup: {
-          from: 'schemabooks', // ⚠️ collection name must match MongoDB collection name (usually lowercase + plural)
+          from: 'schemabooks', 
           localField: '_id',
           foreignField: '_id',
           as: 'book'
         }
       },
       {
-        // Flatten book array
         $unwind: '$book'
       },
       {
-        // Project desired fields
         $project: {
           _id: 0,
           book: {

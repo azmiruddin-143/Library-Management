@@ -8,7 +8,7 @@ bookRouters.post('/', async (req, res) => {
     const book = await schemaBook.create(bookBody)
     res.status(201).json({
         succese: true,
-        message: "Book er Data Insert Oice",
+        message: "Book created successfully",
         book: book
     })
 })
@@ -18,7 +18,7 @@ bookRouters.get('/:id', async (req, res) => {
     const book = await schemaBook.findById(id)
     res.status(201).json({
         succese: true,
-        message: "Book er one Data Find kora oice",
+        message: "Book retrieved successfully",
         book: book
     })
 })
@@ -40,8 +40,8 @@ bookRouters.get('/', async (req, res) => {
 
     res.status(201).json({
         succese: true,
-        message: "Book er All Data Find kora oice",
-        book: book
+        message: "Books retrieved successfully",
+        data: book
     })
 })
 
@@ -55,7 +55,7 @@ bookRouters.put('/:bookId', async (req, res) => {
     const book = await schemaBook.findByIdAndUpdate(bookId, bookBody, { new: true })
     res.status(201).json({
         succese: true,
-        message: "Book er copies Update kora oice",
+        message: "Book updated successfully",
         book: book
     })
 })
@@ -66,8 +66,8 @@ bookRouters.delete('/:bookId', async (req, res) => {
     const book = await schemaBook.findByIdAndDelete(bookId)
     res.status(201).json({
         succese: true,
-        message: "Book er one data Delete kora oice",
-        book: book
+        message: "Book deleted successfully",
+        data: null
     })
 })
 

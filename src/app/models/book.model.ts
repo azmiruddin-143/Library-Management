@@ -9,7 +9,7 @@ const bookSchema = new Schema<IBook>({
     author: String,
     genre: {
         type: String,
-        enum: ['AICTION', 'NON_FICTION','SCIENCE', 'HISTORY', 'BIOGRAPHY', 'FANTASY']
+        enum: ['FICTION', 'NON_FICTION','SCIENCE', 'HISTORY', 'BIOGRAPHY', 'FANTASY']
     },
     isbn: {
         type: String,
@@ -23,6 +23,7 @@ const bookSchema = new Schema<IBook>({
 },
   {
         versionKey: false,
+        timestamps: true
     }
 
 );
