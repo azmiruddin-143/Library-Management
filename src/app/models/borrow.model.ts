@@ -1,19 +1,20 @@
-
+// borrow.model.ts//
 import mongoose, { model, Schema } from "mongoose";
+import { IBorrow } from "../interface/borrow.interface";
 
-const borrowSchema = new Schema({
+const borrowSchema = new Schema<IBorrow>({
     book: {
-        type: mongoose.Schema.Types.ObjectId,
-        require: true
+        type: Schema.Types.ObjectId,
+        ref: "schemaBook",
+        required: true
     },
     quantity: {
         type: Number,
-        require: true,
-        min: 1
+        required: true,
     },
     dueDate: {
-        type: Date,
-        require: true
+        type: Schema.Types.Date,
+        required: true
     }
 },
     {

@@ -3,7 +3,7 @@ import express from "express"
 import { schemaBook } from "../models/book.model";
 export const bookRouters = express.Router()
 
-bookRouters.post('/books', async (req, res) => {
+bookRouters.post('/', async (req, res) => {
     const bookBody = req.body
     const book = await schemaBook.create(bookBody)
     res.status(201).json({
@@ -13,7 +13,7 @@ bookRouters.post('/books', async (req, res) => {
     })
 })
 
-bookRouters.get('/books/:id', async (req, res) => {
+bookRouters.get('/:id', async (req, res) => {
     const id = req.params.id
     const book = await schemaBook.findById(id)
     res.status(201).json({
@@ -27,7 +27,7 @@ bookRouters.get('/books/:id', async (req, res) => {
 
 // filter//
 
-bookRouters.get('/books', async (req, res) => {
+bookRouters.get('/', async (req, res) => {
     const genre = req.query.genre;
     const sortBy = req.query.sortBy;
     const sort = req.query.sort;
@@ -35,7 +35,6 @@ bookRouters.get('/books', async (req, res) => {
     const book = await schemaBook
 
         .find(genre ? { genre: genre } : {})
-        // .sort(sortBy ? { [sortBy]: sort === 'asc' ? 1 : -1 } : {})
          .sort(sortBy ? { [sortBy as string]: sort === 'desc' ? -1 : 1 } : {})
         .limit(limit ? +limit : 5);
 
@@ -50,7 +49,7 @@ bookRouters.get('/books', async (req, res) => {
 
 // filter//
 
-bookRouters.put('/books/:bookId', async (req, res) => {
+bookRouters.put('/:bookId', async (req, res) => {
     const bookId = req.params.bookId
     const bookBody = req.body
     const book = await schemaBook.findByIdAndUpdate(bookId, bookBody, { new: true })
@@ -62,7 +61,7 @@ bookRouters.put('/books/:bookId', async (req, res) => {
 })
 
 
-bookRouters.delete('/books/:bookId', async (req, res) => {
+bookRouters.delete('/:bookId', async (req, res) => {
     const bookId = req.params.bookId
     const book = await schemaBook.findByIdAndDelete(bookId)
     res.status(201).json({
