@@ -53,7 +53,7 @@ bookRouters.get('/', async (req, res) => {
         const book = await schemaBook
 
             .find(genre ? { genre: genre } : {})
-            .sort(sortBy ? { [sortBy as string]: sort === 'desc' ? -1 : 1 } : {})
+            .sort(sortBy? { [sortBy as string]: sort === 'desc' ? -1 : 1 }: { createdAt: sort === 'asc' ? 1 : -1 })
             .limit(limit ? +limit : 50);
 
         res.status(200).json(book);
@@ -64,7 +64,6 @@ bookRouters.get('/', async (req, res) => {
             error: error instanceof Error ? error.message : 'Unknown error'
         });
     }
-
 
 })
 

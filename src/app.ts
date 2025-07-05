@@ -13,7 +13,6 @@ app.use(cors());
 
 app.use(cors({
   origin: 'https://libary-frontend.vercel.app',
-  credentials: true 
 }));
 
 

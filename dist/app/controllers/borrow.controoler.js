@@ -67,11 +67,7 @@ exports.borrowRouters.get('/', (req, res) => __awaiter(void 0, void 0, void 0, f
                 }
             }
         ]);
-        res.status(200).json({
-            success: true,
-            message: 'Borrowed books summary retrieved successfully',
-            data: summary
-        });
+        res.status(200).json(summary);
     }
     catch (error) {
         res.status(500).json({

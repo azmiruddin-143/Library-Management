@@ -28,6 +28,7 @@ exports.bookRouters.post('/', (req, res) => __awaiter(void 0, void 0, void 0, fu
         });
     }
     catch (error) {
+        console.error('Error adding book:', error); // <--- এরর লগ করু
         res.status(400).json({
             success: false,
             message: error,
@@ -53,19 +54,26 @@ exports.bookRouters.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, 
 }));
 // filter//
 exports.bookRouters.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const genre = req.query.genre;
-    const sortBy = req.query.sortBy;
-    const sort = req.query.sort;
-    const limit = req.query.limit;
-    const book = yield book_model_1.schemaBook
-        .find(genre ? { genre: genre } : {})
-        .sort(sortBy ? { [sortBy]: sort === 'desc' ? -1 : 1 } : {})
-        .limit(limit ? +limit : 20);
-    res.status(201).json({
-        succese: true,
-        message: "Books retrieved successfully",
-        data: book
-    });
+    try {
+        const genre = req.query.genre;
+        const sortBy = req.query.sortBy;
+        const sort = req.query.sort;
+        const limit = req.query.limit;
+        const book = yield book_model_1.schemaBook
+            .find(genre ? { genre: genre } : {})
+            // .sort(sortBy ? { [sortBy as string]: sort === 'desc' ? -1 : 1 } : {})
+            // .sort(sortBy? { [sortBy as string]: sort === 'desc' ? -1 : 1 }: { createdAt: -1 })
+            .sort(sortBy ? { [sortBy]: sort === 'desc' ? -1 : 1 } : { createdAt: sort === 'asc' ? 1 : -1 })
+            .limit(limit ? +limit : 50);
+        res.status(200).json(book);
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch books',
+            error: error instanceof Error ? error.message : 'Unknown error'
+        });
+    }
 }));
 // filter//
 exports.bookRouters.put('/:bookId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
