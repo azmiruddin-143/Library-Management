@@ -60,11 +60,8 @@ borrowRouters.get('/', async (req, res) => {
       }
     ]);
 
-    res.status(200).json({
-      success: true,
-      message: 'Borrowed books summary retrieved successfully',
-      data: summary
-    });
+      // এখানে শুধু summary পাঠাও, object না
+    res.status(200).json(summary); 
   } catch (error: any) {
     res.status(500).json({
       success: false,

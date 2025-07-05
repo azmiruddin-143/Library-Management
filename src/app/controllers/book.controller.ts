@@ -13,6 +13,7 @@ bookRouters.post('/', async (req, res) => {
             book: book
         })
     } catch (error) {
+        console.error('Error adding book:', error); // <--- এরর লগ করু
         res.status(400).json({
             success: false,
             message: error,
@@ -38,24 +39,33 @@ bookRouters.get('/:id', async (req, res) => {
 })
 
 
+
+
+
 // filter//
 
 bookRouters.get('/', async (req, res) => {
-    const genre = req.query.genre;
-    const sortBy = req.query.sortBy;
-    const sort = req.query.sort;
-    const limit = req.query.limit;
-    const book = await schemaBook
+    try {
+        const genre = req.query.genre;
+        const sortBy = req.query.sortBy;
+        const sort = req.query.sort;
+        const limit = req.query.limit;
+        const book = await schemaBook
 
-        .find(genre ? { genre: genre } : {})
-        .sort(sortBy ? { [sortBy as string]: sort === 'desc' ? -1 : 1 } : {})
-        .limit(limit ? +limit : 20);
+            .find(genre ? { genre: genre } : {})
+            .sort(sortBy ? { [sortBy as string]: sort === 'desc' ? -1 : 1 } : {})
+            .limit(limit ? +limit : 50);
 
-    res.status(201).json({
-        succese: true,
-        message: "Books retrieved successfully",
-        data: book
-    })
+        res.status(200).json(book);
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch books',
+            error: error instanceof Error ? error.message : 'Unknown error'
+        });
+    }
+
+
 })
 
 
